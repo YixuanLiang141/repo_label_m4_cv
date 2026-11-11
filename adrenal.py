@@ -1,6 +1,7 @@
 import pandas as pd
 
 def filter_large_csv_by_stay_ids(input_file, output_file, key_col, chunksize=100_000):
+    # Dopamine, Dobutamine, Epinephrine, Norepinephrine
     valid_ids = [221662, 221653, 221289, 221906]
 
     reader = pd.read_csv(input_file, chunksize=chunksize)
@@ -42,7 +43,7 @@ def filter_infusion_duration(input_csv, output_csv):
         input_csv,
         parse_dates=['starttime', 'endtime']
     )
-
+    
     grouped = df.groupby('infusionid')
 
     duration = (
@@ -51,7 +52,7 @@ def filter_infusion_duration(input_csv, output_csv):
     )
 
     df = df[duration >= pd.Timedelta(hours=1)]
-
+    
     df.to_csv(output_csv, index=False)
 
     return df
